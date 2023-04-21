@@ -1,81 +1,29 @@
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: myapp-deploy
-# spec:
-#   replicas: 3
-#   selector:
-#     matchLabels:
-#       app: myapp-pod
-#   template:
-#     metadata:
-#       labels:
-#         app: myapp-pod
-#     spec:
-#       containers:
-#       - name: dfbf6f0ff812
-#         image: todo-app-csgy-9223-web
-#         ports:
-#         - containerPort: 8080
-#       - name:  93b26fab8f57
-#         image: mongo:5
-#         ports:
-#         - containerPort: 27017
-#         volumeMounts:
-#         - name: my-volume
-#           mountPath: /data/db
-#       volumes:
-#       - name: my-volume
-#         persistentVolumeClaim:
-#           claimName: mongodb-pvc
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: todo-app-csgy-9223
+  name: todo-app-csgy-9223-web
+  labels:
+    app: todo-app-csgy-9223-web
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: todo-app-csgy-9223
+      app: todo-app-csgy-9223-web
   template:
     metadata:
       labels:
-        app: todo-app-csgy-9223
+        app: todo-app-csgy-9223-web
     spec:
       containers:
       - name: todo-app-csgy-9223-web
-        image: smk8939/to-do-app:2.0.0
+        image: smk8939/app:1.0.0
         ports:
-        - containerPort: 5000
+        - containerPort: 8080
         env:
-        - name: MONGO_URI
-          value: mongodb://mongo:27017/camp2016
+        # - name: MONGO_URI
+        #   value: "mongodb://mongo-svc:27017/camp2016"
         imagePullPolicy: Always
-# ---
-# apiVersion: apps/v1
-# kind: Deployment
-# metadata:
-#   name: mongodb-d
-# spec:
-#   replicas: 1
-#   selector:
-#     matchLabels:
-#       app: mongodb-pod
-#   template:
-#     metadata:
-#       labels:
-#         app: mongodb-pod
-#     spec:
-#       containers:
-#       - name: todo-app-csgy-9223
-#       image: smk8939/to-do-mongo
-#       ports:
-#       - containerPort: 27017
-#         volumeMounts:
-#         - name: my-volume
-#           mountPath: /data/db
-#       volumes:
-#       - name: my-volume
-#         persistentVolumeClaim:
-#           claimName: mongodb-pvc
+      restartPolicy: Always
+
+
+

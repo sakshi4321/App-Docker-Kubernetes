@@ -14,16 +14,20 @@ spec:
     spec:
       containers:
         - name: mongo
-          image: smk8939/to-do-mongo:2.0.0
+          image: smk8939/db:1.0.0
           ports:
             - containerPort: 27017
           volumeMounts:
             - name: storage
               mountPath: /data/db
+          imagePullPolicy: Always
       volumes:
         - name: storage
           persistentVolumeClaim:
             claimName: mongo-pvc 
+
+
+
 
 
             
