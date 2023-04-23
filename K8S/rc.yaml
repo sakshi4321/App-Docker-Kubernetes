@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: todo-flaskapp-rc  # Name of the ReplicationController
+spec:
+  replicas: 3  # Number of replicas to create
+  selector:
+    app: todo-flaskapp  # Label selector for the pods managed by the ReplicationController
+  template:
+    metadata:
+      labels:
+        app: todo-flaskapp  # Labels applied to the pods created from this template
+    spec:
+      containers:
+        - name: flask-app  # Name of the container
+          image: prateekkumar1709/to-do-app:latest  # Docker image to use for the container
+          ports:
+            - containerPort: 5000  # Port the container listens on
+          env:
+            - name: FLASK_ENV  # Environment variable for Flask configuration
+              value: development
+            - name: MONGO_HOST  # Environment variable for MongoDB host
+              value: mongo
+            - name: MONGO_PORT  # Environment variable for MongoDB port
+              value: "27017"
+            - name: PORT  # Environment variable for port the Flask app listens on
+              value: "5000"

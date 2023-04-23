@@ -1,0 +1,11 @@
+groups:
+- name: MyAlerts
+  rules:
+  - alert: FailingProbes
+    expr: sum(kube_pod_container_status_restarts_total{namespace="my-namespace"}) by (pod) > 3
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Pod {{ $labels.pod }} has {{ $value }} restarts in the last 5 minutes."
+      description: "The number of restarts on pod {{ $labels.pod }} has exceeded the threshold of 3 in the last 5 minutes."
